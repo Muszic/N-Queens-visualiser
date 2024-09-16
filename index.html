@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>N-Queens Visualizer</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <div class="header">
+        <h1>N-Queens Visualizer</h1>
+        <div id="controls">
+            <label for="nValue" class="label">Enter N (Size of Board): </label>
+            <input type="number" id="nValue" min="1" value="4">
+            <button onclick="startVisualization()">Visualize</button>
+        </div>
+    </div>
+
+
+    <div id="board-container"></div>
+
+    
+
+    <script>
+        function startVisualization() {
+            generateNQueens();
+        }
+
+        function generateNQueens() {
+            const n = parseInt(document.getElementById('nValue').value);
+            const boardContainer = document.getElementById('board-container');
+            boardContainer.innerHTML = ''; // Clear any previous boards
+            const solutions = [];
+            solveNQueens(n, 0, [], solutions);
+            displayBoards(solutions, n);
+        }
+
+        function solveNQueens(n, row, columns, solutions) {
+            if (row === n) {
+                solutions.push(columns.slice());
+                return;
+            }
+
+            for (let col = 0; col < n; col++) {
+                if (isSafe(row, col, columns)) {
+                    columns.push(col);
+                    solveNQueens(n, row + 1, columns, solutions);
+                    columns.pop();
+                }
+            }
+        }
+
+        function isSafe(row, col, columns) {
+            for (let r = 0; r < row; r++) {
+                const c = columns[r];
+                if (c === col || r - c === row - col || r + c === row + col) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function displayBoards(solutions, n) {
+            const boardContainer = document.getElementById('board-container');
+            boardContainer.innerHTML = ''; // Clear any previous boards
+            
+            const isEven = n % 2 === 0; // Determine if the board size is even
+
+            solutions.forEach(solution => {
+                const board = document.createElement('div');
+                board.className = 'board';
+                board.setAttribute('data-size-even', isEven); // Add attribute to the board
+                board.style.gridTemplateColumns = `repeat(${n}, 50px)`; // Define grid layout
+                
+                for (let row = 0; row < n; row++) {
+                    for (let col = 0; col < n; col++) {
+                        const cell = document.createElement('div');
+                        cell.className = 'cell';
+                        
+                        // Determine the alternating color pattern
+                        const isDark = (row + col) % 2 === 0;
+                        cell.style.backgroundColor = isDark ? '#BB9979' : '#E9E9DF';
+                        
+                        // Add the queen symbol if it's part of the solution
+                        if (solution[row] === col) {
+                            cell.innerHTML = `
+                                <span class="queen">
+                                    <img src="./White_queen.svg" alt="Queen" style="width: 70%; height: 70%;">
+                                </span>
+                            `;
+                        }
+
+                        board.appendChild(cell); // Append each cell directly to the board
+                    }
+                }
+
+                boardContainer.appendChild(board); // Append the board to the container
+            });
+        }
+    </script>
+</body>
+
+</html>

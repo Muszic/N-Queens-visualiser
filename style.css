@@ -1,0 +1,174 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    background: linear-gradient(135deg, #f7f7f7, #ececec);
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+.header {
+    background: linear-gradient(135deg, #FFAB76, #FF6F61);
+    color: white;
+    padding: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+}
+
+.label {
+    font-size: 1rem;
+    letter-spacing: 0px;
+}
+
+#board-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin: 30px 0;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(8, 50px);
+    margin: 15px;
+    border: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    background: linear-gradient(135deg, #FF6F61, #FFD97D);
+    overflow: hidden;
+}
+
+.board:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.board .cell {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    border: none;
+}
+
+/* Alternating colors for the board */
+.board[data-size-even='true'] .cell {
+    background-color: #FAFAF5; /* Light Cream */
+}
+
+.board[data-size-even='true'] .cell:nth-child(even):nth-child(2n+1),
+.board[data-size-even='true'] .cell:nth-child(odd):nth-child(2n) {
+    background-color: #FFAB76; /* Soft Orange */
+}
+
+.board[data-size-even='false'] .cell:nth-child(odd) {
+    background-color: #FAFAF5; /* Light Cream */
+}
+
+.board[data-size-even='false'] .cell:nth-child(even) {
+    background-color: #FFAB76; /* Soft Orange */
+}
+
+.board .cell:hover {
+    background-color: #FFD97D; /* Bright Yellow */
+    transform: scale(1.1);
+}
+
+.queen {
+    animation: queenDrop 0.6s ease;
+    transition: transform 0.3s;
+    display: flex;
+    justify-content: center;
+}
+
+@keyframes queenDrop {
+    0% {
+        transform: translateY(-60px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Controls section */
+#controls {
+    margin: 30px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #FF6F61;
+    padding: 20px;
+    border-radius: 15px;
+    display: inline-block;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+#controls:hover {
+    box-shadow: 0 10px 35px rgba(255, 175, 123, 0.5);
+    transform: scale(1.05);
+}
+
+#controls input {
+    padding: 10px;
+    font-size: 16px;
+    margin-right: 15px;
+    border-radius: 8px;
+    border: 1px solid #FFAB76;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+#controls input:focus {
+    border-color: #FF6F61;
+    box-shadow: 0 0 8px #FF6F61;
+}
+
+#controls button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background: linear-gradient(135deg, #FF6F61, #FFD97D);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    transition: background 0.3s, transform 0.3s;
+}
+
+#controls button:hover {
+    background: linear-gradient(135deg, #FFD97D, #FF6F61);
+    color: #FF6F61;
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(255, 111, 97, 0.6);
+}
+
+/* Adding subtle fade-in animation to controls */
+#controls {
+    animation: controlsFadeIn 0.5s ease-in-out;
+}
+
+@keyframes controlsFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Accessibility for buttons */
+#controls button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px #FFAB76;
+}
