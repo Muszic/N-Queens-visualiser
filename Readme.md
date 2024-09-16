@@ -20,3 +20,5 @@ This visualizer uses a backtracking algorithm to solve the N-Queens problem. Bac
 Once a valid placement for all queens is found, the solution is stored and displayed.
 
 ## Screenshots
+  ![image](https://github.com/Muszic/N-Queens-visualiser/blob/main/images/img_4.png)
+  ![image](https://github.com/Muszic/N-Queens-visualiser/blob/main/images/img_5.png)
